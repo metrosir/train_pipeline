@@ -1,0 +1,28 @@
+version: "3"
+services:
+  sd-pipeline:
+#    image: kestr3l/stable-diffusion-webui:1.1.0
+    image: kestr3l/stable-diffusion-webui:1.2.2
+    container_name: sd-webui
+    restart: always
+    ports:
+      - "7863:7860"
+      - "7864:7861"
+    ulimits:
+      memlock: -1
+      stack: 67108864
+    shm_size: 4G
+    deploy:
+      resources:
+        limits:
+          cpus: "8.00"
+          memory: 16G
+        reservations:
+          devices:
+            # https://docs.docker.com/compose/gpu-support/
+            - capabilities: [gpu]
+    volumes:
+      # 这里主要是方便映射下载的模型文件
+      - /data/aigc/stable-diffusion-webui/models:/home/user/stable-diffusion-webui/models:cached
+      # 修改容器的默认启动脚本，方便我们手动控制
+      - ./entrypoint.sh:/usr/local/bin/entrypoint.sh:cached
