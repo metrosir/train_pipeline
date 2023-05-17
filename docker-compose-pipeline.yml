@@ -3,7 +3,7 @@ services:
   sd-pipeline:
 #    image: kestr3l/stable-diffusion-webui:1.1.0
     image: kestr3l/stable-diffusion-webui:1.2.2
-    container_name: sd-webui
+    container_name: sd-pipeline
     restart: always
     ports:
       - "7863:7860"
